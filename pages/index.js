@@ -1,9 +1,79 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import ContactCard from '../components/contactCard'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
+import ErrorMessage from '../components/Error'
+import Link from 'next/link'
+import { useState, useEffect } from 'react'
+
+
+const DUMMY_DATA =[
+  {
+    id: '0',
+    name: 'Divesh kumar Singh',
+    type: 'Office',
+    phone: '9205029076',
+    isWhatsApp: 'true',
+    photo: "https://firebasestorage.googleapis.com/v0/b/invedus-divesh.appspot.com/o/files%2Fphoto.jpeg?alt=media&token=967207d5-e8bd-4bc4-a409-03cabeffbc8e"
+  },
+  {
+    id: '1',
+    name: 'Prashant Verma',
+    type: 'Personal',
+    phone: '9204455544',
+    isWhatsApp: 'false',
+    photo: "https://firebasestorage.googleapis.com/v0/b/invedus-divesh.appspot.com/o/files%2Fphoto.jpeg?alt=media&token=967207d5-e8bd-4bc4-a409-03cabeffbc8e"
+
+  },
+  {
+    id: '2',
+    name: 'Vaibhav Panwar',
+    type: 'Office',
+    phone: '9347814526',
+    isWhatsApp: 'true',
+    photo: "https://firebasestorage.googleapis.com/v0/b/invedus-divesh.appspot.com/o/files%2Fphoto.jpeg?alt=media&token=967207d5-e8bd-4bc4-a409-03cabeffbc8e"
+
+  },
+  {
+    id: '3',
+    name: 'Chandler Meurel Bing',
+    type: 'Personal',
+    phone: '9205029076',
+    isWhatsApp: 'false',
+    photo: "https://firebasestorage.googleapis.com/v0/b/invedus-divesh.appspot.com/o/files%2Fphoto.jpeg?alt=media&token=967207d5-e8bd-4bc4-a409-03cabeffbc8e"
+
+  },
+  {
+    id: '4',
+    name: 'Joshep Tribiani',
+    type: 'Office',
+    phone: '9205029076',
+    isWhatsApp: 'true',
+    photo: "https://firebasestorage.googleapis.com/v0/b/invedus-divesh.appspot.com/o/files%2Fphoto.jpeg?alt=media&token=967207d5-e8bd-4bc4-a409-03cabeffbc8e"
+  }
+]
+
+
 
 export default function Home() {
+  
+  const [data, setData] = useState([])
+
+  // To be used in form component
+  // useEffect(() => {
+  //   localStorage.setItem('contacts', JSON.stringify(DUMMY_DATA));
+  // }, [data]);
+
+  useEffect(() => {
+    const contacts = JSON.parse(localStorage.getItem('contacts'));
+    if (contacts) {
+    setData(contacts);
+    }
+  }, []);
+
   return (
+
     <div className={styles.container}>
       <Head>
         <title>Create Next App</title>
@@ -12,60 +82,25 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+        <Header/>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+        <div className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-4 gap-5 pt-20 px-5">
+        {console.log(data)}
+          {data.length !==0 ? data.map((contact)=>(
+            <ContactCard 
+            key={contact.id}
+            name = {contact.name}
+            type = {contact.type}
+            phone = {contact.phone}
+            isWhatsApp = {contact.isWhatsApp}
+            photo= {contact.photo}
+            />
+          )) : <div className='text-xl '><ErrorMessage message="NO CONTACT FOUND"/> <div className=''><Link href='/AddContactsPage' className='border rounded-xl px-2 text-lg'>Add Contacts</Link></div></div>
+          }
         </div>
       </main>
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
+      <Footer/>
     </div>
   )
 }
