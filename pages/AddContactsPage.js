@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react'
 import Header from '../components/Header'
 import AddContactForm from '../components/AddContactForm'
-
+import { useRouter } from "next/router";
 
 
 function AddContactsPage(){
 
     const [contacts, setContacts] = useState([])
+    const router = useRouter();
 
     const submitHandler = (newContactInfo) =>{
         const contactInfo = {
@@ -14,7 +15,8 @@ function AddContactsPage(){
         };
 
         setContacts([...contacts, contactInfo]);
-        localStorage.setItem('contacts', JSON.stringify(contacts));
+        localStorage.setItem('contacts', JSON.stringify([...contacts, contactInfo]));
+    router.push("/");
     }
 
 
