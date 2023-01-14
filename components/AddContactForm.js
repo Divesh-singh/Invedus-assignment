@@ -28,7 +28,6 @@ function AddContactForm(props){
                 isWhatsApp: contactIsWhatsApp,
                 photo: url,
             };
-            console.log(contactDetails)
             props.onSaveContactData(contactDetails);
             setContactImageLink((prev) => url);
         });
@@ -37,7 +36,7 @@ function AddContactForm(props){
     }
 
     return(
-        <div className="md:container px-10  "style={{"background-color": "#f5f0f0", "color":"black"}} >
+        <div className="md:container px-10  "style={{"backgroundColor": "#f5f0f0", "color":"black"}} >
             <h1 className='text-2xl font-bold'>Add New Contact </h1>
             <form >
                 <label className="block py-5">

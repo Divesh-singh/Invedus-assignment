@@ -46,10 +46,13 @@ export default function Home() {
 
   useEffect(() => {
     const contacts = JSON.parse(localStorage.getItem('contacts'));
-    const sortedContacts = contacts.sort((a,b)=> a.name.localeCompare(b.name));
-    if (sortedContacts) {
-    setData(sortedContacts);
+    if (contacts){
+      const sortedContacts = contacts.sort((a,b)=> a.name.localeCompare(b.name));
+      if (sortedContacts) {
+      setData(sortedContacts);
+      }
     }
+    
   }, []);
 
   return (
@@ -65,7 +68,7 @@ export default function Home() {
         <Header/>
 
         <div className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-4 gap-5 pt-20 px-5">
-        {console.log(data)}
+
           {data.length !==0 ? data.map((contact, index)=>(
             <ContactCard 
             onEditContact={editContactHandler}
