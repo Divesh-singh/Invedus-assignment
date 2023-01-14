@@ -6,69 +6,49 @@ import Footer from '../components/Footer'
 import ErrorMessage from '../components/Error'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
+import {storage} from '../firebase/initFirebase.js'
+import {ref, deleteObject} from 'firebase/storage'
 
-
-const DUMMY_DATA =[
-  {
-    id: '0',
-    name: 'Divesh kumar Singh',
-    type: 'Office',
-    phone: '9205029076',
-    isWhatsApp: 'true',
-    photo: "https://firebasestorage.googleapis.com/v0/b/invedus-divesh.appspot.com/o/files%2Fphoto.jpeg?alt=media&token=967207d5-e8bd-4bc4-a409-03cabeffbc8e"
-  },
-  {
-    id: '1',
-    name: 'Prashant Verma',
-    type: 'Personal',
-    phone: '9204455544',
-    isWhatsApp: 'false',
-    photo: "https://firebasestorage.googleapis.com/v0/b/invedus-divesh.appspot.com/o/files%2Fphoto.jpeg?alt=media&token=967207d5-e8bd-4bc4-a409-03cabeffbc8e"
-
-  },
-  {
-    id: '2',
-    name: 'Vaibhav Panwar',
-    type: 'Office',
-    phone: '9347814526',
-    isWhatsApp: 'true',
-    photo: "https://firebasestorage.googleapis.com/v0/b/invedus-divesh.appspot.com/o/files%2Fphoto.jpeg?alt=media&token=967207d5-e8bd-4bc4-a409-03cabeffbc8e"
-
-  },
-  {
-    id: '3',
-    name: 'Chandler Meurel Bing',
-    type: 'Personal',
-    phone: '9205029076',
-    isWhatsApp: 'false',
-    photo: "https://firebasestorage.googleapis.com/v0/b/invedus-divesh.appspot.com/o/files%2Fphoto.jpeg?alt=media&token=967207d5-e8bd-4bc4-a409-03cabeffbc8e"
-
-  },
-  {
-    id: '4',
-    name: 'Joshep Tribiani',
-    type: 'Office',
-    phone: '9205029076',
-    isWhatsApp: 'true',
-    photo: "https://firebasestorage.googleapis.com/v0/b/invedus-divesh.appspot.com/o/files%2Fphoto.jpeg?alt=media&token=967207d5-e8bd-4bc4-a409-03cabeffbc8e"
-  }
-]
 
 
 
 export default function Home() {
   
   const [data, setData] = useState([])
+  const router = useRouter()
 
-  // To be used in form component
-  // useEffect(() => {
-  //   localStorage.setItem('contacts', JSON.stringify(DUMMY_DATA));
-  // }, [data]);
+  const deleteContactHandler = (index, name, photo)=>{
+    console.log("Going to delete "+ index)
+    if (window.confirm(`Are you sure you want to delete contact: ${name} ?`)) {
+    // Delete the item from the array
+      const newContactList = data.filter((item, i) => i !== index);
+      // Delete photo from firebase storage
+      const photoRef = ref(storage, photo );
+      deleteObject(photoRef).then(() => {
+        // File deleted successfully
+      }).catch((error) => {
+        // Uh-oh, an error occurred!
+        console.log(error)
+      });
+      // Update the state
+      setData(newContactList);
+      // Update the local storage
+      localStorage.setItem("contacts", JSON.stringify(newContactList));
+    }
+  }
+
+  const editContactHandler = (id) =>{
+    console.log("Go to edit page for " + id)
+    router.push(`/EditContact/${id}`)
+  
+  }
 
   useEffect(() => {
     const contacts = JSON.parse(localStorage.getItem('contacts'));
-    if (contacts) {
-    setData(contacts);
+    const sortedContacts = contacts.sort((a,b)=> a.name.localeCompare(b.name));
+    if (sortedContacts) {
+    setData(sortedContacts);
     }
   }, []);
 
@@ -86,9 +66,13 @@ export default function Home() {
 
         <div className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-4 gap-5 pt-20 px-5">
         {console.log(data)}
-          {data.length !==0 ? data.map((contact)=>(
+          {data.length !==0 ? data.map((contact, index)=>(
             <ContactCard 
-            key={contact.id}
+            onEditContact={editContactHandler}
+            onDeleteContact={deleteContactHandler}
+            key={index}
+            index = {index}
+            id = {contact.id}
             name = {contact.name}
             type = {contact.type}
             phone = {contact.phone}

@@ -1,13 +1,10 @@
-import { ref, uploadBytes, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import {storage} from '../firebase/initFirebase';
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import {useState, useEffect} from 'react';
-
-// import {v4} from 'uuid' 
+import {storage} from '../firebase/initFirebase.js'
+import {v4} from 'uuid' 
 
 function AddContactForm(props){
 
-    // const storage = getStorage();
-    // const storageRef = ref(storage, 'images')
     
     const [contactName, setName] = useState(null)
     const [contactPhone, setPhone] = useState(null)
@@ -17,82 +14,31 @@ function AddContactForm(props){
     const [contactImageLink, setContactImageLink] = useState('')
 
     
-
-    const uploadFile = () => {
-        if (contactImageUpload == null) return;
-        const name = new Date().getTime() + contactImageUpload.name
-        const imageRef = ref(storage, `images/${name}`);
-        uploadBytes(imageRef, contactImageUpload ).then((snapshot) => {
-        getDownloadURL(snapshot.ref).then((url) => {
-            setContactImageLink((prev) => [...prev, url]);
-        });
-        });
-        };
-
-    useEffect(()=>{
-        const uploadPhoto =() =>{
-            const name = new Date().getTime() + contactImageUpload.name
-            const storageRef = ref(storage, `contacts/${name}`)
-            console.log(storageRef)
-
-            // const uploadTask = uploadBytesResumable(storageRef, contactImageUpload);
-            uploadFile();
-            
-
-//             uploadTask.on('state_changed', 
-//             (snapshot) => {
-//                 // Observe state change events such as progress, pause, and resume
-//                 // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-//                 const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-//                 console.log('Upload is ' + progress + '% done');
-//                 switch (snapshot.state) {
-//                 case 'paused':
-//                     console.log('Upload is paused');
-//                     break;
-//                 case 'running':
-//                     console.log('Upload is running');
-//                     break;
-//                 }
-//             }, 
-//             (error) => {
-//                 console.log(error)
-//                 // Handle unsuccessful uploads
-//             }, 
-//             () => {
-//                 // Handle successful uploads on complete
-//                 // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-//                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-//                 console.log('File available at', downloadURL);
-//                 setContactImageLink(downloadURL)
-//                 });
-//             }
-// );
-
-        }
-        contactImageUpload && uploadPhoto()
-    },[contactImageUpload])
-    
-
-//TODO: Fetch local storage, update locally , set updated contactlist to local storage
-
-    // const updateDB = () =>{
-    //     localStorage.setItem('newList', JSON.stringify(contactDetails))
-    // }
     
     const handelSubmit = () =>{
-
-        const contactDetails= {
-            name: contactName,
-            phone: contactPhone,
-            type: contactType,
-            isWhatsApp: contactIsWhatsApp,
-            photo: contactImageUpload
-        };
-        props.onSaveContactData(contactDetails);
+        if (contactImageUpload == null) return;
+        const imageRef = ref(storage, `contacts/${contactImageUpload.name + v4()}`);
+        uploadBytes(imageRef, contactImageUpload).then((snapshot) => {
+        getDownloadURL(snapshot.ref).then((url) => {
+    
+            const contactDetails= {
+                name: contactName,
+                phone: contactPhone,
+                type: contactType,
+                isWhatsApp: contactIsWhatsApp,
+                photo: url,
+            };
+            console.log(contactDetails)
+            props.onSaveContactData(contactDetails);
+            setContactImageLink((prev) => url);
+        });
+        });
+        
     }
 
     return(
         <div className="md:container px-10  "style={{"background-color": "#f5f0f0", "color":"black"}} >
+            <h1 className='text-2xl font-bold'>Add New Contact </h1>
             <form >
                 <label className="block py-5">
                     <span className="block font-bold text-slate-700 text-lg"> Name</span>

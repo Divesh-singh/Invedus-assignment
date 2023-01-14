@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Header from '../components/Header'
 import AddContactForm from '../components/AddContactForm'
 import { useRouter } from "next/router";
+import {v4} from 'uuid'
 
 
 function AddContactsPage(){
@@ -11,7 +12,7 @@ function AddContactsPage(){
 
     const submitHandler = (newContactInfo) =>{
         const contactInfo = {
-            ...newContactInfo, id: Math.random().toString()
+            ...newContactInfo, id: (newContactInfo.phone + v4()).toString()
         };
 
         setContacts([...contacts, contactInfo]);

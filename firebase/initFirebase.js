@@ -1,27 +1,23 @@
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+// import {getFirestore} from 'firebase/firestore'
 import { getStorage } from "firebase/storage";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-
+// Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.NEXT_PUBLIC_FIREBASE_API_ID,
-}
+    apiKey: "AIzaSyBjxY11MnpZdubFCnDT7u3N3hfbQPXgQ6A",
+    authDomain: "invedus-divesh.firebaseapp.com",
+    projectId: "invedus-divesh",
+    storageBucket: "invedus-divesh.appspot.com",
+    messagingSenderId: "109206325852",
+    appId: "1:109206325852:web:3433a41501ee01d0b93499"
+};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Initialize Cloud Storage and get a reference to the service
+// const db =  getFirestore(app);
+// export default db;
 export const storage = getStorage(app);
-
-// // export default function initFirebase(){
-// //     if(!firebase.getApps.length){
-// //         firebase.initializeApp(firebaseConfig)
-// //     }
-// // }
-
-// const app = initializeApp(firebaseConfig);
-// export const storage = getStorage(app);
