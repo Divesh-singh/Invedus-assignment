@@ -20,11 +20,6 @@
       "static/chunks/main.js",
       "static/chunks/pages/index.js"
     ],
-    "/AddContactsPage": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/AddContactsPage.js"
-    ],
     "/EditContact": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

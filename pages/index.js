@@ -61,7 +61,7 @@ export default function Home() {
       <Head>
         <title>Contact App</title>
         <meta name="Contact app" content="Created by Divesh Singh for React JS developer assignment (Invedus) Tech Stack Used:{React JS, Next JS, Firebase for file storage, LocalStorage for saving contact in client browser} " />
-        
+        <link rel="icon" href="/favicon.png" />
       </Head>
 
       <main className={styles.main}>
