@@ -61,7 +61,7 @@ function AddContactForm(props){
                     <input type="checkbox" name='Whatsapp' checked ={contactIsWhatsApp} onChange={(event)=> setIsWhatsApp(!contactIsWhatsApp)} className="mx-2" />
                 </label>
                 <label className="block py-5">
-                    <span className="inline-block font-bold text-slate-700 text-lg">Upload Photo</span>
+                    <span className="inline-block font-bold text-slate-700 text-lg">Upload Photo</span><br/>
                     <input type="file"  onChange={(event)=>{setImageUpload(event.target.files[0])}}  className="mx-2" />
                 </label>
                 <button onClick={handelSubmit} type="button" className="border-2 m-3 p-2 rounded-2xl">Submit</button>

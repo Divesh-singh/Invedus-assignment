@@ -33,7 +33,7 @@ function AddContactsPage(){
     return (
         <div>
             <Header/>
-            <div className='container block ml-auto mr-auto p-10  sm:w-3/4 lg:w-1/2  '>
+            <div className='min-w-fit container block ml-auto mr-auto p-10  sm:w-3/4 lg:w-1/2  '>
             <AddContactForm onSaveContactData={submitHandler} />
             </div>
 

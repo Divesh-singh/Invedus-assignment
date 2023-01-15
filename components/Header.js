@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 function Header(){
     return(
-        <header className=" pt-6 pb-1 md:py-6" style={{"backgroundColor": "grey", "color":"white"}}>
+        <header className="min-w-fit pt-6 pb-1 md:py-6" style={{"backgroundColor": "grey", "color":"white"}}>
             <div className="container md:flex md:items-center md:justify-between mx-auto px-4">
             <Link href='/'><h1 className="text-5xl font-bold mb-4 md:mb-0 select-none" >Contacts</h1></Link>
             <ul className="md:flex md:items-center list-none text-lg ">

@@ -1,3 +1,4 @@
+import styles from '../styles/Home.module.css'
 import Header from '../components/Header'
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -73,12 +74,13 @@ const EditContactPage = () => {
     }
 
     return (
-        <div>
+        <div className="min-w-fit">
+            <div className='min-w-fit'>
             <Header/>
-            <div className='container block ml-auto mr-auto p-10  sm:w-3/4 lg:w-1/2  '>
-            <div className="md:container px-10  "style={{"backgroundColor": "#f5f0f0", "color":"black"}} >
+            <div className='container block ml-auto mr-auto p-10 w-full sm:w-3/4 lg:w-1/2  '>
+            <div className="md:container px-10 "style={{"backgroundColor": "#f5f0f0", "color":"black"}} >
                 <h1 className='text-2xl font-bold'>Edit Contact Form</h1>
-            <form >
+            <form className=''>
                 <label className="block py-5">
                     <span className="block font-bold text-slate-700 text-lg"> Name</span>
                     <input type="text" value={contactName} onChange={(event)=>setName(event.target.value)} placeholder="Name here" className="mt-1 w-full px-3 py-2 text-lg bg-white border border-slate-300
@@ -101,12 +103,13 @@ const EditContactPage = () => {
                     <input type="checkbox" name='Whatsapp' checked ={contactIsWhatsApp} onChange={(event)=> setIsWhatsApp(!contactIsWhatsApp)} className="mx-2" />
                 </label>
                 <label className="block py-5">
-                    <span className="inline-block font-bold text-slate-700 text-lg">Change Photo</span>
+                    <span className="inline-block font-bold text-slate-700 text-lg">Change Photo</span><br/>
                     <input type="file"  onChange={(event)=>{setImageUpload(event.target.files[0])}}  className="mx-2" />
                 </label>
                 <button onClick={handelSubmit} type="button" className="border-2 m-3 p-2 rounded-2xl">Submit</button>
             </form>
         </div>
+            </div>
             </div>
 
         </div>
