@@ -19,10 +19,13 @@ export default function Home() {
   const router = useRouter()
 
   const deleteContactHandler = (index, name, photo)=>{
-    console.log("Going to delete "+ index)
+  
     if (window.confirm(`Are you sure you want to delete contact: ${name} ?`)) {
+
+      const newContactList = [...data];
+      newContactList.splice(index, 1);
     // Delete the item from the array
-      const newContactList = data.filter((item, i) => i !== index);
+      // const newContactList = data.filter((item, i) => i !== index);
       // Delete photo from firebase storage
       const photoRef = ref(storage, photo );
       deleteObject(photoRef).then(() => {
