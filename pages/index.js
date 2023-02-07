@@ -20,7 +20,7 @@ export default function Home() {
 
   const deleteContactHandler = (index, name, photo)=>{
   
-    if (window.confirm(`Are you sure you want to delete contact: ${name} ?`)) {
+    if (window.confirm(`Delete contact: ${name} ?`)) {
 
       const newContactList = [...data];
       newContactList.splice(index, 1);
